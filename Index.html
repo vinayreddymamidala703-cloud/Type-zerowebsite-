@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TypeZero – Learn Typing From Zero</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:#f5f7fb;
+text-align:center;
+padding:20px;
+}
+
+h1{
+color:#333;
+}
+
+#textDisplay{
+background:white;
+padding:15px;
+border-radius:8px;
+margin:20px auto;
+max-width:700px;
+font-size:20px;
+line-height:1.5;
+border:1px solid #ccc;
+}
+
+#inputBox{
+width:90%;
+max-width:700px;
+height:120px;
+font-size:18px;
+padding:10px;
+margin-top:10px;
+}
+
+.stats{
+margin-top:20px;
+font-size:18px;
+}
+
+button{
+padding:10px 20px;
+font-size:16px;
+margin-top:15px;
+cursor:pointer;
+}
+
+.correct{
+color:green;
+}
+
+.incorrect{
+color:red;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>TypeZero – Learn Typing From Zero</h1>
+
+<p>Practice typing and improve your speed.</p>
+
+<div id="textDisplay"></div>
+
+<textarea id="inputBox" placeholder="Start typing here..."></textarea>
+
+<br>
+
+<button onclick="startTest()">Start New Test</button>
+
+<div class="stats">
+
+<p>Time: <span id="time">0</span> sec</p>
+
+<p>WPM: <span id="wpm">0</span></p>
+
+<p>Accuracy: <span id="accuracy">100</span>%</p>
+
+</div>
+
+<script>
+
+const paragraphs = [
+
+"The quick brown fox jumps over the lazy dog.",
+
+"Typing is an important skill for students and professionals.",
+
+"Practice every day to improve your typing speed.",
+
+"Learning touch typing helps you work faster on a computer.",
+
+"Technology is changing the world very quickly.",
+
+"Good typing skills can save a lot of time.",
+
+"Practice makes a person perfect in every skill.",
+
+"Never stop learning new things in life.",
+
+"Programming and typing are useful digital skills.",
+
+"Stay focused and keep practicing typing daily."
+
+];
+
+let timer=0;
+let interval;
+let currentText="";
+let started=false;
+
+function startTest(){
+
+currentText=paragraphs[Math.floor(Math.random()*paragraphs.length)];
+
+document.getElementById("textDisplay").innerText=currentText;
+
+document.getElementById("inputBox").value="";
+
+timer=0;
+
+document.getElementById("time").innerText=0;
+
+document.getElementById("wpm").innerText=0;
+
+document.getElementById("accuracy").innerText=100;
+
+clearInterval(interval);
+
+started=false;
+
+}
+
+document.getElementById("inputBox").addEventListener("input",function(){
+
+if(!started){
+
+interval=setInterval(()=>{
+
+timer++;
+
+document.getElementById("time").innerText=timer;
+
+},1000);
+
+started=true;
+
+}
+
+let typed=this.value;
+
+let correct=0;
+
+for(let i=0;i<typed.length;i++){
+
+if(typed[i]===currentText[i]){
+
+correct++;
+
+}
+
+}
+
+let accuracy=Math.floor((correct/typed.length)*100)||100;
+
+document.getElementById("accuracy").innerText=accuracy;
+
+let words=typed.length/5;
+
+let wpm=Math.floor((words/timer)*60)||0;
+
+document.getElementById("wpm").innerText=wpm;
+
+});
+
+startTest();
+
+</script>
+
+</body>
+</html>
